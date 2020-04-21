@@ -3,63 +3,111 @@ import { useState, useEffect } from 'preact/hooks';
 import "@tago/custom-widget";
 import "@tago/custom-widget/dist/custom-widget.css"
 import "./Widget.css";
+import Step1 from './Step1';
+import Step2 from './Step2';
 
 function Widget() {
-  const [widgetTitle, setWidgetTitle] = useState("");
-  const [variable, setVariable] = useState({});
-  const [text, setText] = useState("");
+  const [activeStep, setActiveStep] = useState(0);
+  const [variables, setVariables] = useState({});
   const [response, setResponse] = useState("");
+
+  const steps = [
+    Step1,
+    Step2
+  ];
+
+  const nextStep = () => {
+    if (activeStep < steps.length - 1) {
+      setActiveStep(activeStep + 1);
+    }
+  }
+
+  const previousStep = () => {
+    if (activeStep > 0) {
+      setActiveStep(activeStep - 1);
+    }
+  }
+
+  const onChangeVariable = (variableName, value) => {
+    setVariables({...variables, [variableName]: value})
+  }
 
   useEffect(() => {
     window.TagoIO.onStart(null, (widget) => {
-      setWidgetTitle(widget.label);
       // get the name of the first variable
-      setVariable({ variable: widget.display.variables[0].variable });
+      // setVariablesToSend(widget.display.variables);
     });
 
     window.TagoIO.onRealtime((data) => {
       // get the last variable from realtime
+      let realtime = {};
+      realtime["var2"] = [];
       if (data && data.result.length) {
-        setVariable({
-          variable: data.result[0].variable,
-          value: data.result[0].value,
+        data.result.forEach(el => {
+          if (el.variable == "var2") {
+            realtime[el.variable].push(el.value);
+          } else if (realtime[el.variable] == undefined
+            || realtime[el.variable] == "") {
+            realtime[el.variable] = el.value;   
+          }
         })
       }
+      setVariables(realtime);
     })
   }, []);
 
   const sendData = () => {
+    const arr = [];
+    Object.keys(variables).forEach(function(key) {
+      if (key !== "var2") {
+        arr.push({ variable: key, value: variables[key] });
+      }
+    });
     window.TagoIO.sendData(
-      [{ 
-        ...variable,
-        value: text 
-      }], { autoFill: true }, 
+      arr, { autoFill: true }, 
       (response) => {
         if (response.status) {
           setResponse("data sent successfully");
         } else {
           setResponse(response.message);
         }
-        setTimeout(() => {
-          setResponse("");
-        }, 3000);
     })
   }
+  const ActualStep = steps[activeStep];
 
   return (
     <div className="container">
-      <div>
-        <h1>{widgetTitle}</h1>
-        <h2>Variable: {variable.variable}</h2>
-        <h2>Value: {variable.value}</h2>
-      </div>
-      <div>
-        <input type="text" value={text} onChange={(e) => setText(e.target.value)}/>
-        <button onClick={sendData}>Send data</button>
-        {response && (
-          <div className="alert">{response}</div>
-        )}
-      </div>
+      <h1>Wizard example:</h1>
+
+      {response ? (
+        <div className="response">
+          <div>{response}</div>
+          <button onClick={() => {
+            setActiveStep(0);
+            setResponse("");
+            }}>New form</button>
+        </div>
+      ) : (
+        <div>
+          <ActualStep variables={variables} onChangeVariable={onChangeVariable}/>
+
+          <div className="buttons">
+            {(activeStep > 0) && (
+              <button onClick={previousStep}>Previous</button>
+            )}
+            {activeStep < steps.length - 1 ? (
+              <button onClick={nextStep}>Next</button>
+            ) : (
+              <button onClick={sendData}>Submit</button>
+            )}
+          </div>
+          <div style="text-align:center;margin-top: 15px;">
+            {steps.map((el, index) =>  (
+              <span className={`step ${index == activeStep ? 'active' : ''}`}></span>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
