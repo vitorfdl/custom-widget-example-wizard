@@ -35,10 +35,7 @@ function Widget() {
   }
 
   useEffect(() => {
-    window.TagoIO.onStart(null, (widget) => {
-      // get the name of the first variable
-      // setVariablesToSend(widget.display.variables);
-    });
+    window.TagoIO.onStart();
 
     window.TagoIO.onRealtime((data) => {
       // get the last variable from realtime
