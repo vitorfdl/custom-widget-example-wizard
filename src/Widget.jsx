@@ -41,6 +41,7 @@ function Widget() {
     window.TagoIO.onRealtime((data) => {
       // get the last variable from realtime
       let realtime = {};
+      // var2 is a dropdown variable, the selected data is saved in var2val
       realtime["var2"] = [];
       if (data && data.result.length) {
         data.result.forEach(el => {
@@ -59,6 +60,7 @@ function Widget() {
   const sendData = () => {
     const arr = [];
     Object.keys(variables).forEach(function(key) {
+      // var2 is a dropdown variable, the selected data is saved in var2val
       if (key !== "var2") {
         arr.push({ variable: key, value: variables[key] });
       }
