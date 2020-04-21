@@ -1,7 +1,9 @@
-import { h, render } from 'preact';
+import { h } from 'preact';
 
 export default function Step2(props) {
+
   const { variables, onChangeVariable } = props;
+
   return (
     <div className="step-container">
       <h3>Step 2</h3>
@@ -25,5 +27,3 @@ export default function Step2(props) {
     </div>
   );
 }
-
-render(<Step2 />, document.body);

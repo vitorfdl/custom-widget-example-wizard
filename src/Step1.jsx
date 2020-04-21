@@ -1,4 +1,4 @@
-import { h, render } from 'preact';
+import { h } from 'preact';
 
 export default function Step1(props) {
 
@@ -27,5 +27,3 @@ export default function Step1(props) {
     </div>
   );
 }
-
-render(<Step1 />, document.body);
