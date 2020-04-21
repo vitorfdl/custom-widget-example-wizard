@@ -6,7 +6,7 @@ export default function Step2(props) {
 
   return (
     <div className="step-container">
-      <h3>Step 2</h3>
+      <h3>Step 3</h3>
       <br/>
       <div class="form-group">
         <label for="var5">var5</label>
