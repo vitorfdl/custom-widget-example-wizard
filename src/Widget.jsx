@@ -5,6 +5,7 @@ import "@tago/custom-widget/dist/custom-widget.css"
 import "./Widget.css";
 import Step1 from './Step1';
 import Step2 from './Step2';
+import Step3 from './Step3';
 
 function Widget() {
   const [activeStep, setActiveStep] = useState(0);
@@ -13,7 +14,8 @@ function Widget() {
 
   const steps = [
     Step1,
-    Step2
+    Step2,
+    Step3
   ];
 
   const nextStep = () => {
