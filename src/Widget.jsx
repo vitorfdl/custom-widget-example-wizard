@@ -64,8 +64,7 @@ function Widget() {
         arr.push({ variable: key, value: variables[key] });
       }
     });
-    window.TagoIO.sendData(
-      arr, { autoFill: true }, 
+    window.TagoIO.sendData(arr, 
       (response) => {
         if (response.status) {
           setResponse("data sent successfully");
