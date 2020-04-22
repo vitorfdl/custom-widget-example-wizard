@@ -15,7 +15,7 @@ function Widget() {
   const steps = [
     Step1,
     Step2,
-    Step3
+    Step3,
   ];
 
   const nextStep = () => {
@@ -31,11 +31,11 @@ function Widget() {
   }
 
   const onChangeVariable = (variableName, value) => {
-    setVariables({...variables, [variableName]: value})
+    setVariables({...variables, [variableName]: value});
   }
 
   useEffect(() => {
-    window.TagoIO.onStart();
+    window.TagoIO.ready();
 
     window.TagoIO.onRealtime((data) => {
       // get the last variable from realtime
@@ -50,10 +50,10 @@ function Widget() {
             || realtime[el.variable] == "") {
             realtime[el.variable] = el.value;   
           }
-        })
+        });
       }
       setVariables(realtime);
-    })
+    });
   }, []);
 
   const sendData = () => {
@@ -71,7 +71,7 @@ function Widget() {
         } else {
           setResponse(response.message);
         }
-    })
+    });
   }
   const ActualStep = steps[activeStep];
 
