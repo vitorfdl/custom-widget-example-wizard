@@ -1404,25 +1404,15 @@ function Step1(props) {
   }, (0, _preact.h)("h3", null, "Step 1"), (0, _preact.h)("br", null), (0, _preact.h)("div", {
     class: "form-group"
   }, (0, _preact.h)("label", {
-    for: "var1"
-  }, "var1"), (0, _preact.h)("input", {
-    id: "var1",
-    value: variables && variables.var1 ? variables.var1 : "",
-    onChange: function onChange(e) {
-      return onChangeVariable('var1', e.target.value);
-    }
-  })), (0, _preact.h)("div", {
-    class: "form-group"
-  }, (0, _preact.h)("label", {
-    for: "var2"
-  }, "var2"), (0, _preact.h)("select", {
+    for: "test"
+  }, "Badge"), (0, _preact.h)("select", {
     class: "select",
-    id: "var2",
-    value: variables && variables.var2 ? variables.var2val : "",
+    id: "device_id",
+    value: variables && variables.device_id ? variables.device_id2val : "",
     onChange: function onChange(e) {
-      return onChangeVariable('var2val', e.target.value);
+      return onChangeVariable('device_id', e.target.value);
     }
-  }, variables && variables.var2 && variables.var2.map(function (el) {
+  }, variables && variables.device_id && variables.device_id.map(function (el) {
     return (0, _preact.h)("option", {
       value: el
     }, el);
@@ -1620,7 +1610,7 @@ function Widget() {
   var ActualStep = steps[activeStep];
   return (0, _preact.h)("div", {
     className: "container"
-  }, (0, _preact.h)("h1", null, "Wizard example:"), response ? (0, _preact.h)("div", {
+  }, (0, _preact.h)("h1", null, "Setting up badges"), response ? (0, _preact.h)("div", {
     className: "response"
   }, (0, _preact.h)("div", null, response), (0, _preact.h)("button", {
     onClick: function onClick() {
@@ -1676,7 +1666,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61295" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62401" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
