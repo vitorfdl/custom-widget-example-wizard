@@ -3,6 +3,8 @@ import { h } from 'preact';
 export default function Step1(props) {
 
   const { variables, onChangeVariable } = props;
+  console.log(1);
+  console.log(variables);
   
   return (
     <div className="step-container">
